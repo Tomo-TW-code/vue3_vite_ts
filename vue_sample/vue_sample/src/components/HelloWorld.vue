@@ -4,13 +4,17 @@ import { ref } from 'vue'
 defineProps<{ msg: string }>()
 
 const count = ref(0)
+const hello_world: String = 'Hello World'
+const plusCount = () => {
+  count.value++
+}
 </script>
 
 <template>
   <h1>{{ msg }}</h1>
-
+  <h2 class="title">{{ hello_world }}</h2>
   <div class="card">
-    <button type="button" @click="count++">count is {{ count }}</button>
+    <button type="button" @click="plusCount">count is {{ count }}</button>
     <p>
       Edit
       <code>components/HelloWorld.vue</code> to test HMR
@@ -35,4 +39,10 @@ const count = ref(0)
 .read-the-docs {
   color: #888;
 }
+
+.title {
+  color: #42b983;
+  font-size: 18px;
+}
+
 </style>

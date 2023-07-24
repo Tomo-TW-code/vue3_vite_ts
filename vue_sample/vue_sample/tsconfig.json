@@ -13,7 +13,9 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "preserve",
-
+    "allowSyntheticDefaultImports": true, // Error 1192 対策のため追加
+    "esModuleInterop": true, // Error 1192 対策のため追加
+    
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,
