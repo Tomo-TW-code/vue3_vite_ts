@@ -17,6 +17,7 @@
 
   type Props = {
     tweets: Tweet[]
+    // deleteTweet: (id: number) => void 
   }
 
   // PropsはdefinePropsで定義すると親から子へ値を渡すことができる
