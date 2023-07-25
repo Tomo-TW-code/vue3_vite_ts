@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <h1>Tweeter</h1>
-    <TweetPostForm />
+    <TweetPostForm @post-tweet="postTweet" />
     <div class="tweet-container">
       <!-- v-if, v-show:
         v-ifの方が切り替えのコストが高いので、
@@ -10,7 +10,7 @@
       <p v-if="tweets.length <= 0">No tweets have been added</p>
       <ul v-else>
         <!-- propsで親から子へtweetsを渡す -->
-        <TweetList :tweets="tweets" />
+        <TweetList :tweets="tweets" @delete-tweet="deleteTweet" />
       </ul>
     </div>
   </div>
@@ -26,17 +26,11 @@ const tweets = ref([
   {id: 0, description: 'Hello, World!'},
   {id: 1, description: 'This is the second tweeet.'}
 ])
-// v-modelでtweet情報を結びつける変数
-const inputtingDescription = ref<string>('')
 
 // postボタンの処理
-const postTweet = () => {
-  const tweet = {
-    id: Math.random(),
-    description: inputtingDescription.value
-  }
+const postTweet = (description: string) => {
+  const tweet = {id: Math.random(), description}
   tweets.value.push(tweet)
-  console.log('post...', tweets.value)
 }
 
 // deleteボタンの処理

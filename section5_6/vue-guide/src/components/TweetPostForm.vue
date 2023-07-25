@@ -7,9 +7,12 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+// v-modelでtweet情報を結びつける変数
 const inputtingDescription = ref<string>('')
 
+const emit = defineEmits(['post-tweet'])
 const postTweet = () => {
+  emit('post-tweet', inputtingDescription.value)
 }
 
 </script>

@@ -7,7 +7,7 @@
 </template>
 
 <script setup lang="ts">
-  import { defineProps } from 'vue';
+  import { defineProps, defineEmits } from 'vue';
 
   /* 型エイリアス： TypeScript独特の構文でオブジェクトや配列の型を強制するもの */
   type Tweet = {
@@ -19,12 +19,13 @@
     tweets: Tweet[]
   }
 
-  const deleteTweet = (id: number) => {
-    console.log('delete')
-  }
-
   // PropsはdefinePropsで定義すると親から子へ値を渡すことができる
   defineProps<Props>()
+
+  const emit = defineEmits(['delete-tweet'])
+  const deleteTweet = (id: number) => {
+    emit('delete-tweet', id)
+  }
 
 </script>
 
