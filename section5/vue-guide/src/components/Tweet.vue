@@ -6,9 +6,10 @@ const tweets = ref([
   {id: 0, description: 'Hello, World!'},
   {id: 1, description: 'This is the second tweeet.'}
 ])
-// v-modelで結びつける変数
+// v-modelでtweet情報を結びつける変数
 const inputtingDescription = ref<string>('')
 
+// postボタンの処理
 const postTweet = () => {
   const tweet = {
     id: Math.random(),
@@ -16,6 +17,13 @@ const postTweet = () => {
   }
   tweets.value.push(tweet)
   console.log('post...', tweets.value)
+}
+
+// deleteボタンの処理
+// リアクティブな値から、動的に値を削除するための処理
+const deleteTweet = (id: number) => {
+  // 押されたid以外のtweetsを返す（実質のデリート処理）
+  tweets.value = tweets.value.filter(t => t.id !== id)
 }
 
 </script>
@@ -28,10 +36,16 @@ const postTweet = () => {
       <button class="save-button" @click="postTweet()">post</button>
     </div>
     <div class="tweet-container">
-      <ul>
-        <!-- v-forディレクティブ -->
+      <!-- v-if, v-show:
+        v-ifの方が切り替えのコストが高いので、
+        上記2つを使い分けるが基本的にはv-ifでOK
+      -->
+      <p v-if="tweets.length <= 0">No tweets have been added</p>
+      <ul v-else>
+        <!-- v-for -->
         <li v-for="tweet in tweets" :key="tweet.id" class="tweet-list">
           <span>{{ tweet.description }}</span>
+          <button @click="deleteTweet(tweet.id)" class="delete-button">delete</button>
         </li>
       </ul>
     </div>
@@ -69,10 +83,22 @@ const postTweet = () => {
   font-size: 12px;
 }
 
-button {
+.save-button {
   color: #fff;
   font-weight: bold;
   background-color: #68c9c9;
+  border: none;
+  border-radius: 2px;
+  width: 60px;
+  height: 22px;
+  cursor: pointer;
+  transition: filter .25s;
+}
+
+.delete-button {
+  color: #fff;
+  font-weight: bold;
+  background-color: #c99a68;
   border: none;
   border-radius: 2px;
   width: 60px;
