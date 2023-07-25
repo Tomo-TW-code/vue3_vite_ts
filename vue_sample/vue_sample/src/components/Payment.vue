@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive, ref, toRefs, watch } from 'vue'
+import { onBeforeMount, onMounted, onUpdated, reactive, ref, toRefs, watch } from 'vue'
 
 // const itemName1 = ref<string>('Desk')
 const itemName2: string = 'Bike'
@@ -71,6 +71,19 @@ watch(price, () => {
 //     return item1.price + ' yen'
 //   }
 // }
+
+// ライフサイクルフック
+onBeforeMount(() => {
+  console.log('before mount')
+})
+
+onMounted(() => {
+  console.log('mounted')
+})
+
+onUpdated(() => {
+  console.log('update')
+})
 
 </script>
 
