@@ -1,8 +1,22 @@
 <script setup lang="ts">
-const tweets = [
+import { ref } from 'vue'
+
+// tweets:ref関数でリアクティブ化した変数
+const tweets = ref([
   {id: 0, description: 'Hello, World!'},
   {id: 1, description: 'This is the second tweeet.'}
-]
+])
+// v-modelで結びつける変数
+const inputtingDescription = ref<string>('')
+
+const postTweet = () => {
+  const tweet = {
+    id: Math.random(),
+    description: inputtingDescription.value
+  }
+  tweets.value.push(tweet)
+  console.log('post...', tweets.value)
+}
 
 </script>
 
@@ -10,8 +24,8 @@ const tweets = [
   <div class="container">
     <h1>Tweeter</h1>
     <div class="form-container">
-      <input/>
-      <button class="save-button">post</button>
+      <input v-model="inputtingDescription"/>
+      <button class="save-button" @click="postTweet()">post</button>
     </div>
     <div class="tweet-container">
       <ul>
@@ -45,6 +59,14 @@ const tweets = [
 
 .tweet-list {
   list-style: none;
+  display: flex;
+  justify-content: space-between;
+  background-color: rgb(204, 219, 233);
+  width: 300px;
+  padding: 8px 20px;
+  margin-bottom: 12px;
+  border-radius: 4px;
+  font-size: 12px;
 }
 
 button {
