@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, reactive } from 'vue'
+import { reactive, ref, toRefs, watch } from 'vue'
 
 // const itemName1 = ref<string>('Desk')
 const itemName2: string = 'Bike'
@@ -34,13 +34,29 @@ const clear = () => {
 const budget = 50000
 
 // 何らかの計算をして、処理を分岐したいときcomputed
-const priceLabel = computed(() => {
-  if (item1.price > budget * 2) {
-    return 'tooooo expensive'
-  } else if (item1.price > budget) {
-    return 'too expensive'
+// const priceLabel = computed(() => {
+//   if (item1.price > budget * 2) {
+//     return 'tooooo expensive'
+//   } else if (item1.price > budget) {
+//     return 'too expensive'
+//   } else {
+//     return item1.price + ' yen'
+//   }
+// })
+
+// watchでcomputedと同様の処理を行う
+const priceLabel = ref<string>(item1.price + ' yen')
+const { price } =toRefs(item1)
+watch(price, () => {
+  if (price.value > budget * 2) {
+    priceLabel.value = 'tooooo expensive'
+    // return 'tooooo expensive'
+  } else if (price.value > budget) {
+    priceLabel.value = 'too expensive'
+    // return 'too expensive'
   } else {
-    return item1.price + ' yen'
+    priceLabel.value = price.value + ' yen'
+    // return price.value + ' yen'
   }
 })
 
