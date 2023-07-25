@@ -3,19 +3,20 @@
     <div class="input-container">
       <div class="input-column">
         <span>name:</span>
-        <input class="input" v-model="inputtingName" />
+        <input class="input-name" v-model="inputtingName" />
       </div>
+      <span class="error-message" v-if="!isValidName">{{ nameLengthLimit }} characters ore less, please</span>
       <div class="input-column">
         <span>age:</span>
         <input type="number" class="input" v-model="inputtingAge" />
       </div>
     </div>
-    <button @click="register" class="register-button">register</button>
+    <button :disabled="!isValidName" @click="register" class="register-button">register</button>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
 const inputtingName = ref<string>('')
 const inputtingAge = ref<number>(0)
@@ -31,6 +32,20 @@ const register = () => {
   console.log('person ..', person)
   emit('register', person)
 }
+
+// 名前のバリデーション処理
+const nameLengthLimit = 15
+const isValidName = computed(() => {
+  if (inputtingName.value.length >= nameLengthLimit) {
+    return false
+  } else {
+    return true
+  }
+})
+
+const validationColor = computed(() => {
+  return isValidName.value ? 'white' : 'rgb(244,194,190)'
+})
 
 </script>
 
@@ -60,6 +75,11 @@ const register = () => {
   justify-content: space-between;
 }
 
+.input-name {
+  background-color: v-bind(validationColor);
+}
+
+
 input {
   width: 120px;
   margin-bottom: 8px;
@@ -68,6 +88,11 @@ input {
 span {
   font-size: 20px;
   font-weight: bold;
+}
+
+.error-message {
+  font-size: 12px;
+  color: rgb(244, 194, 190);
 }
 
 </style>
