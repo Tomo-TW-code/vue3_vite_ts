@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive } from 'vue'
+import { computed, reactive } from 'vue'
 
 // const itemName1 = ref<string>('Desk')
 const itemName2: string = 'Bike'
@@ -31,13 +31,38 @@ const clear = () => {
   item1.price = 0
 }
 
+const budget = 50000
+
+// 何らかの計算をして、処理を分岐したいときcomputed
+const priceLabel = computed(() => {
+  if (item1.price > budget * 2) {
+    return 'tooooo expensive'
+  } else if (item1.price > budget) {
+    return 'too expensive'
+  } else {
+    return item1.price + ' yen'
+  }
+})
+
+// computedを使わなくてもメソッドで実行できるが,
+// conputedを使うとvueの中でキャッシュをとったりするので動作が最適化される
+// const getPriceLabel = () => {
+//   if (item1.price > budget * 2) {
+//     return 'tooooo expensive'
+//   } else if (item1.price > budget) {
+//     return 'too expensive'
+//   } else {
+//     return item1.price + ' yen'
+//   }
+// }
+
 </script>
 
 <template>
   <div class="container">
     <h1>Payment</h1>
     <input v-model="item1.name" />
-    <input v-model="item1.price" />
+    <input type="number" v-model="item1.price" />
 
     <!-- v-modelで記述する際は不要 -->
     <!-- <input @input="input" :value="item1.name" /> -->
@@ -46,7 +71,9 @@ const clear = () => {
     <button @click="clear">Clear</button>
     <div class="payment">
       <label>{{ item1.name }}</label>
-      <label>{{ item1.price }} yen</label>
+      <!-- 三項演算子 -->
+      <!-- <label>{{ item1.price > budget ? 'too expensive...' : item1.price + ' yen' }}</label> -->
+      <label>{{ priceLabel }}</label>
       <a :href="url1"> bought at...</a>
       <button @click="buy(item1.name)">BUY</button>
     </div>
