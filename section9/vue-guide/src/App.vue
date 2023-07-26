@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import TodoList from './components/TodoList.vue';
 import { provide } from 'vue';
-import { todos } from './useTodo'
+import { todos, todoKey } from './useTodo'
 
-provide('todos', todos)
+provide(todoKey, todos)
 // provide('addTodo', addTodo)
 </script>
 
