@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import Rating from './Rating.vue'
 import { DirectiveBinding, ref, watch } from 'vue'
 
 // 自作ディレクティブ v-focus
@@ -15,6 +16,8 @@ const vFocus = {
 const userName = ref<string>('')
 const from = ref<string>('japan')
 const interest = ref([])
+const ratings = ref<string>('')
+
 watch(interest, () => { console.log('interest', interest.value)})
 
 const radios = ref([])
@@ -24,6 +27,8 @@ const onSubmit = () => {
   console.log('userName ', userName.value)
   console.log('from is', from.value)
   console.log('radio ', radios.value)
+
+  console.log('ratings...', ratings.value)
 
   interest.value = []
 }
@@ -77,6 +82,9 @@ const onSubmit = () => {
         <input id="how-other" name="how" type="radio" value="others" v-model="radios" />
         <label for="how-other">Other</label>
       </div>
+    </div>
+    <div>
+      <Rating v-model="ratings"/>
     </div>
     <div>
       <!-- ディレクティブに繋がったmodifiers（修飾子） -->
