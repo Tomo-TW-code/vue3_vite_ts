@@ -11,10 +11,15 @@ const vFocus = {
 const userName = ref<string>('')
 const interest = ref([])
 
+const data = ref()
+const isLoading = ref<boolean>(false)
+
 // GETリクエスト データを取得する
 onMounted(async () => {
-  const data = await axios.get('https://vue-example-6167b-default-rtdb.firebaseio.com/surveys.json')
-  console.log('data is ', data)
+  isLoading.value = true
+  data.value = await axios.get('https://vue-example-6167b-default-rtdb.firebaseio.com/surveys.json')
+  isLoading.value = false
+  console.log('data is ', data.value)
 })
 
 const onSubmit = (e: Event) => {
@@ -71,6 +76,8 @@ const onSubmit = (e: Event) => {
         <label for="interest-angular">Angular.js</label>
       </div>
     </div>
+    <div v-if="isLoading">Loading...</div>
+    <div v-else>{{ data }}</div>
     <div>
       <button @click.prevent="onSubmit">Save Data</button>
     </div>
