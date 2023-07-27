@@ -18,6 +18,8 @@ const err = ref()
 // GETリクエスト データを取得する
 onMounted(async () => {
   isLoading.value = true
+
+  // GETリクエストに失敗したらエラーを返す
   try {
     const response = await axios.get('https://vue-example-6167b-default-rtdb.firebaseio.com/surveys.json')
     if (response.status !== 200) {
